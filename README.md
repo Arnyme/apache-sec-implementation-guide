@@ -30,9 +30,15 @@ This guide provides a refined approach to implementing brute force detection, IP
    ```
    Add the following rules to detect brute force attempts:
    ```apache
+   # Initialize the brute force counter
    SecAction "id:900110,phase:1,nolog,pass,setvar:tx.bruteforce_counter=0"
+   
+   # Increase the counter when a 401 Unauthorized status is returned
    SecRule RESPONSE_STATUS "@streq 401" "phase:5,pass,setvar:tx.bruteforce_counter=+1"
+   
+   # Block the IP if the brute force counter exceeds the threshold (e.g., 5 attempts)
    SecRule TX:bruteforce_counter "@gt 5" "phase:5,block,log,msg:'Brute Force Attack Detected',expirevar:tx.bruteforce_counter=3600"
+
    ```
 
 ## Step 2: Install and Configure fail2ban
