@@ -1,4 +1,4 @@
-# Updated Apache Security Implementation Guide
+# Apache Security Implementation Guide
 
 This guide provides a refined approach to implementing brute force detection, IP blocking, and geofencing in Apache, based on the information provided.
 
